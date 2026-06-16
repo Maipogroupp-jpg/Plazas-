@@ -1,0 +1,1499 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>PlazaCheck · Cerro Navia</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=DM+Sans:wght@400;500;600&display=swap');
+
+:root {
+  --sky:      #1A6FB5;
+  --sky-dark: #0F4C81;
+  --sky-soft: #D6EAFF;
+  --grass:    #3A8C4E;
+  --grass-lt: #EAF7EC;
+  --sun:      #F5A623;
+  --sun-soft: #FEF3DA;
+  --red:      #D94040;
+  --red-soft: #FDEAEA;
+  --sand:     #F9F5EE;
+  --stone:    #6B7280;
+  --ink:      #1C2130;
+  --white:    #FFFFFF;
+  --border:   #E4E9F0;
+  --shadow:   0 2px 16px rgba(26,111,181,0.10);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--sand);
+  color: var(--ink);
+  min-height: 100vh;
+  padding-bottom: 48px;
+}
+
+/* ─── HEADER ─── */
+.app-header {
+  background: linear-gradient(135deg, var(--sky-dark) 0%, var(--sky) 100%);
+  padding: 0 0 0 0;
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  box-shadow: 0 3px 20px rgba(15,76,129,0.25);
+}
+
+.header-top {
+  display: flex;
+  align-items: center;
+  padding: 14px 18px 10px;
+  gap: 12px;
+}
+
+.header-logo {
+  width: 40px;
+  height: 40px;
+  background: rgba(255,255,255,0.18);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  flex-shrink: 0;
+}
+
+.header-titles { flex: 1; }
+.header-titles h1 {
+  font-family: 'Nunito', sans-serif;
+  font-size: 20px;
+  font-weight: 900;
+  color: white;
+  letter-spacing: -0.5px;
+  line-height: 1.1;
+}
+.header-titles p {
+  font-size: 11px;
+  color: rgba(255,255,255,0.75);
+  margin-top: 2px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+.back-btn {
+  background: rgba(255,255,255,0.18);
+  border: none;
+  border-radius: 20px;
+  padding: 6px 14px 6px 10px;
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  display: none;
+  align-items: center;
+  gap: 4px;
+}
+.back-btn.visible { display: flex; }
+
+/* Progress bar */
+.header-progress {
+  padding: 0 18px 14px;
+}
+.progress-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: rgba(255,255,255,0.8);
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+.progress-track {
+  height: 7px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #74C9FF, #FFFFFF);
+  border-radius: 10px;
+  transition: width 0.6s cubic-bezier(.4,0,.2,1);
+}
+
+/* Decorative wave under header */
+.header-wave {
+  display: block;
+  width: 100%;
+  height: 18px;
+  background: var(--sand);
+  clip-path: ellipse(55% 100% at 50% 100%);
+  margin-top: -1px;
+}
+
+/* ─── SCREENS ─── */
+.screen { display: none; }
+.screen.active { display: block; }
+
+/* ─── HOME ─── */
+.home-hero {
+  margin: 0 16px 20px;
+  background: white;
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+
+.home-hero::before {
+  content: '';
+  position: absolute;
+  right: -20px; top: -20px;
+  width: 100px; height: 100px;
+  background: var(--sky-soft);
+  border-radius: 50%;
+  z-index: 0;
+}
+
+.home-hero::after {
+  content: '🌳';
+  position: absolute;
+  right: 16px; top: 14px;
+  font-size: 40px;
+  z-index: 1;
+}
+
+.home-hero-content { position: relative; z-index: 2; }
+.home-hero h2 {
+  font-family: 'Nunito', sans-serif;
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--sky-dark);
+  line-height: 1.2;
+}
+.home-hero p {
+  font-size: 13px;
+  color: var(--stone);
+  margin-top: 6px;
+  line-height: 1.5;
+}
+
+/* Stats */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin: 0 16px 20px;
+}
+
+.stat-card {
+  background: white;
+  border-radius: 16px;
+  padding: 16px 10px 14px;
+  text-align: center;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 4px;
+}
+.stat-card.blue::before  { background: var(--sky); }
+.stat-card.green::before { background: var(--grass); }
+.stat-card.red::before   { background: var(--red); }
+
+.stat-icon { font-size: 20px; margin-bottom: 4px; }
+.stat-num {
+  font-family: 'Nunito', sans-serif;
+  font-size: 30px;
+  font-weight: 900;
+  line-height: 1;
+}
+.stat-card.blue  .stat-num  { color: var(--sky); }
+.stat-card.green .stat-num  { color: var(--grass); }
+.stat-card.red   .stat-num  { color: var(--red); }
+.stat-label {
+  font-size: 10px;
+  color: var(--stone);
+  margin-top: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+}
+
+/* Buttons */
+.section-pad { padding: 0 16px; }
+
+.btn-main {
+  width: 100%;
+  background: linear-gradient(135deg, var(--sky) 0%, var(--sky-dark) 100%);
+  color: white;
+  border: none;
+  border-radius: 16px;
+  padding: 18px 20px;
+  font-size: 16px;
+  font-weight: 700;
+  font-family: 'Nunito', sans-serif;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+  box-shadow: 0 4px 16px rgba(26,111,181,0.30);
+  transition: transform 0.12s, box-shadow 0.12s;
+}
+.btn-main:active { transform: scale(0.98); box-shadow: 0 2px 8px rgba(26,111,181,0.20); }
+
+.btn-main-icon {
+  width: 36px; height: 36px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.btn-main-text { flex: 1; text-align: left; }
+.btn-main-text small { display: block; font-size: 11px; opacity: 0.8; font-weight: 400; font-family: 'DM Sans', sans-serif; }
+
+.btn-outline {
+  width: 100%;
+  background: white;
+  color: var(--sky-dark);
+  border: 2px solid var(--sky-soft);
+  border-radius: 16px;
+  padding: 16px 20px;
+  font-size: 15px;
+  font-weight: 700;
+  font-family: 'Nunito', sans-serif;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+  box-shadow: var(--shadow);
+  transition: transform 0.12s;
+}
+.btn-outline:active { transform: scale(0.98); background: var(--sky-soft); }
+
+.btn-outline-icon {
+  width: 36px; height: 36px;
+  background: var(--sky-soft);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.btn-grass {
+  background: linear-gradient(135deg, var(--grass) 0%, #2d7040 100%);
+  box-shadow: 0 4px 16px rgba(58,140,78,0.30);
+}
+.btn-grass:active { box-shadow: 0 2px 8px rgba(58,140,78,0.20); }
+
+.btn-sun {
+  background: linear-gradient(135deg, var(--sun) 0%, #e0861a 100%);
+  box-shadow: 0 4px 16px rgba(245,166,35,0.30);
+}
+
+/* ─── FORM ─── */
+.form-screen { padding: 0 16px; }
+
+.step-indicator {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+.step-dot {
+  flex: 1;
+  height: 5px;
+  border-radius: 10px;
+  background: var(--border);
+  transition: background 0.3s;
+}
+.step-dot.active { background: var(--sky); }
+.step-dot.done   { background: var(--grass); }
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+  margin-top: 6px;
+}
+.section-header-icon {
+  width: 38px; height: 38px;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+.icon-sky   { background: var(--sky-soft); }
+.icon-grass { background: var(--grass-lt); }
+.icon-sun   { background: var(--sun-soft); }
+
+.section-header h3 {
+  font-family: 'Nunito', sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--ink);
+}
+.section-header p { font-size: 12px; color: var(--stone); margin-top: 1px; }
+
+.form-group { margin-bottom: 18px; }
+.form-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--stone);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+}
+
+.form-input {
+  width: 100%;
+  border: 2px solid var(--border);
+  border-radius: 14px;
+  padding: 14px 16px;
+  font-size: 15px;
+  font-family: 'DM Sans', sans-serif;
+  color: var(--ink);
+  background: white;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  -webkit-appearance: none;
+}
+.form-input:focus {
+  border-color: var(--sky);
+  box-shadow: 0 0 0 3px var(--sky-soft);
+}
+
+.form-select {
+  width: 100%;
+  border: 2px solid var(--border);
+  border-radius: 14px;
+  padding: 14px 40px 14px 16px;
+  font-size: 15px;
+  font-family: 'DM Sans', sans-serif;
+  color: var(--ink);
+  background: white;
+  outline: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14'%3E%3Cpath fill='%236B7280' d='M7 9L2 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  transition: border-color 0.2s;
+}
+.form-select:focus { border-color: var(--sky); }
+
+/* GPS box */
+.gps-box {
+  border: 2px solid var(--border);
+  border-radius: 14px;
+  padding: 14px 16px;
+  background: white;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: border-color 0.3s, background 0.3s;
+}
+.gps-box.ok { border-color: var(--grass); background: var(--grass-lt); }
+.gps-pulse {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: var(--sky-soft);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+.gps-box.ok .gps-pulse { background: var(--grass-lt); }
+.gps-info { flex: 1; }
+.gps-info strong { font-size: 14px; font-weight: 600; display: block; }
+.gps-info small { font-size: 11px; color: var(--stone); display: block; margin-top: 2px; }
+
+/* Photo area */
+.photo-area {
+  border: 2.5px dashed var(--border);
+  border-radius: 16px;
+  padding: 22px 16px;
+  text-align: center;
+  background: white;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+}
+.photo-area:active { border-color: var(--sky); background: var(--sky-soft); }
+.photo-area input[type="file"] {
+  position: absolute; inset: 0;
+  opacity: 0; cursor: pointer;
+  width: 100%; height: 100%;
+}
+.photo-area-icon { font-size: 34px; margin-bottom: 8px; }
+.photo-area-text { font-size: 14px; font-weight: 600; color: var(--sky); }
+.photo-area-sub { font-size: 12px; color: var(--stone); margin-top: 3px; }
+
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: 12px;
+}
+.photo-thumb-wrap { position: relative; }
+.photo-thumb {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 12px;
+  display: block;
+}
+.photo-remove {
+  position: absolute;
+  top: -6px; right: -6px;
+  background: var(--red);
+  color: white;
+  border: 2px solid white;
+  border-radius: 50%;
+  width: 24px; height: 24px;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  font-weight: 700;
+  line-height: 1;
+}
+
+/* Damage checkboxes */
+.damage-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.damage-chip {
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.18s;
+  background: white;
+}
+.damage-chip.selected { border-color: var(--sun); background: var(--sun-soft); }
+.damage-chip input { display: none; }
+.damage-chip-icon { font-size: 16px; }
+.damage-chip-label { font-size: 13px; font-weight: 600; color: var(--ink); }
+.damage-chip.selected .damage-chip-label { color: #8a5700; }
+
+/* Juego card (form) */
+.juego-form-card {
+  background: white;
+  border: 2px solid var(--border);
+  border-radius: 18px;
+  padding: 18px;
+  margin-bottom: 14px;
+  box-shadow: var(--shadow);
+}
+.juego-form-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.juego-form-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.juego-form-num {
+  font-family: 'Nunito', sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  color: white;
+  background: var(--sky);
+  border-radius: 20px;
+  padding: 3px 12px;
+}
+.btn-del {
+  background: var(--red-soft);
+  color: var(--red);
+  border: none;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: 700;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+}
+
+/* ─── LISTA ─── */
+.list-screen { padding: 0 16px; }
+
+.filter-tabs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 18px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 2px;
+}
+.filter-tab {
+  flex-shrink: 0;
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: 2px solid var(--border);
+  background: white;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--stone);
+  cursor: pointer;
+  transition: all 0.18s;
+  font-family: 'Nunito', sans-serif;
+}
+.filter-tab.active {
+  background: var(--sky);
+  border-color: var(--sky);
+  color: white;
+}
+
+.plaza-card {
+  background: white;
+  border-radius: 18px;
+  padding: 16px;
+  margin-bottom: 10px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  cursor: pointer;
+  transition: transform 0.12s;
+}
+.plaza-card:active { transform: scale(0.98); }
+
+.plaza-card-thumb {
+  width: 56px; height: 56px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, var(--sky-soft), var(--grass-lt));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28px;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+.plaza-card-thumb img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  border-radius: 14px;
+}
+
+.plaza-card-info { flex: 1; min-width: 0; }
+.plaza-card-name {
+  font-family: 'Nunito', sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.plaza-card-meta {
+  font-size: 12px;
+  color: var(--stone);
+  margin-top: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.plaza-card-badges { margin-top: 7px; display: flex; gap: 6px; align-items: center; }
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  font-family: 'Nunito', sans-serif;
+}
+.pill-green { background: var(--grass-lt); color: var(--grass); }
+.pill-warn  { background: var(--sun-soft); color: #8a5700; }
+.pill-red   { background: var(--red-soft); color: var(--red); }
+
+.plaza-card-arrow { color: var(--border); font-size: 22px; flex-shrink: 0; }
+
+/* ─── DETALLE ─── */
+.detail-screen { padding: 0 16px; }
+
+.detail-hero {
+  background: linear-gradient(135deg, var(--sky-dark), var(--sky));
+  border-radius: 20px;
+  padding: 20px;
+  color: white;
+  margin-bottom: 16px;
+  position: relative;
+  overflow: hidden;
+}
+.detail-hero::after {
+  content: '🏞️';
+  position: absolute;
+  right: 16px; bottom: 12px;
+  font-size: 52px;
+  opacity: 0.25;
+}
+.detail-hero h2 {
+  font-family: 'Nunito', sans-serif;
+  font-size: 22px;
+  font-weight: 900;
+  position: relative; z-index: 1;
+}
+.detail-hero p { font-size: 13px; opacity: 0.85; margin-top: 4px; position: relative; z-index: 1; }
+.detail-hero-badges { margin-top: 12px; display: flex; gap: 8px; position: relative; z-index: 1; }
+.detail-badge {
+  background: rgba(255,255,255,0.2);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.info-card {
+  background: white;
+  border-radius: 18px;
+  padding: 18px;
+  margin-bottom: 14px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+.info-card-title {
+  font-family: 'Nunito', sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--stone);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+  gap: 12px;
+}
+.info-row:last-child { border-bottom: none; padding-bottom: 0; }
+.info-row-label { color: var(--stone); font-size: 13px; flex-shrink: 0; }
+.info-row-val { font-weight: 600; text-align: right; }
+
+/* juego detail card */
+.juego-detail {
+  background: white;
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 10px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+.juego-detail-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.juego-detail-name {
+  font-family: 'Nunito', sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+}
+.juego-damage-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.damage-tag {
+  background: var(--sun-soft);
+  color: #8a5700;
+  border-radius: 20px;
+  padding: 3px 10px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+/* Maps link */
+.maps-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--grass-lt);
+  border: 2px solid var(--grass);
+  border-radius: 14px;
+  padding: 14px 16px;
+  text-decoration: none;
+  color: var(--grass);
+  font-weight: 700;
+  font-size: 15px;
+  font-family: 'Nunito', sans-serif;
+  margin-bottom: 14px;
+  transition: background 0.18s;
+}
+.maps-btn:active { background: #c8f0d0; }
+
+/* Empty state */
+.empty-state {
+  text-align: center;
+  padding: 48px 24px;
+  color: var(--stone);
+}
+.empty-state-icon { font-size: 56px; margin-bottom: 14px; }
+.empty-state h3 {
+  font-family: 'Nunito', sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+  margin-bottom: 6px;
+  color: var(--ink);
+}
+.empty-state p { font-size: 14px; line-height: 1.5; }
+
+/* Toast */
+.toast {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%) translateY(80px);
+  background: var(--ink);
+  color: white;
+  padding: 13px 22px;
+  border-radius: 30px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: 'Nunito', sans-serif;
+  z-index: 999;
+  transition: transform 0.3s cubic-bezier(.4,0,.2,1);
+  white-space: nowrap;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  pointer-events: none;
+}
+.toast.show { transform: translateX(-50%) translateY(0); }
+
+/* Divider */
+.divider {
+  height: 1px;
+  background: var(--border);
+  margin: 20px 0;
+}
+
+/* Spacing util */
+.mt8  { margin-top: 8px;  }
+.mt16 { margin-top: 16px; }
+.mt20 { margin-top: 20px; }
+
+/* Bottom scroll padding */
+.pb32 { padding-bottom: 32px; }
+</style>
+</head>
+<body>
+
+<!-- ─── HEADER ─── -->
+<header class="app-header">
+  <div class="header-top">
+    <button class="back-btn" id="back-btn" onclick="handleBack()">← Volver</button>
+    <div class="header-logo" id="header-logo">🛝</div>
+    <div class="header-titles">
+      <h1 id="header-title">PlazaCheck</h1>
+      <p id="header-sub">Municipalidad de Cerro Navia</p>
+    </div>
+  </div>
+  <div class="header-progress">
+    <div class="progress-meta">
+      <span id="progress-label">Levantamiento en curso</span>
+      <span id="progress-pct">0 / 100 plazas</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+    </div>
+  </div>
+</header>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- ══════════════════════════════ HOME ══════════════════════════════ -->
+<div class="screen active" id="screen-home">
+  <div style="height:16px"></div>
+
+  <div class="home-hero" style="margin-bottom:18px">
+    <div class="home-hero-content">
+      <h2>Inspección de Juegos</h2>
+      <p>Registra el estado de cada juego de plaza para el informe técnico municipal.</p>
+    </div>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-card blue">
+      <div class="stat-icon">🏞️</div>
+      <div class="stat-num" id="stat-total">0</div>
+      <div class="stat-label">Plazas</div>
+    </div>
+    <div class="stat-card green">
+      <div class="stat-icon">🎠</div>
+      <div class="stat-num" id="stat-juegos">0</div>
+      <div class="stat-label">Juegos</div>
+    </div>
+    <div class="stat-card red">
+      <div class="stat-icon">⚠️</div>
+      <div class="stat-num" id="stat-criticos">0</div>
+      <div class="stat-label">Críticos</div>
+    </div>
+  </div>
+
+  <div class="section-pad">
+    <button class="btn-main btn-grass" onclick="goTo('screen-form')">
+      <div class="btn-main-icon">📋</div>
+      <div class="btn-main-text">
+        Registrar nueva plaza
+        <small>Ubica, fotografía y anota cada juego</small>
+      </div>
+    </button>
+    <button class="btn-outline" onclick="goTo('screen-lista')">
+      <div class="btn-outline-icon">🗂️</div>
+      Ver plazas registradas
+    </button>
+    <button class="btn-main btn-sun" onclick="exportarCSV()">
+      <div class="btn-main-icon">📊</div>
+      <div class="btn-main-text">
+        Exportar informe CSV
+        <small>Abre en Excel con todos los datos</small>
+      </div>
+    </button>
+  </div>
+  <div style="height:16px"></div>
+</div>
+
+<!-- ══════════════════════════════ FORM ══════════════════════════════ -->
+<div class="screen" id="screen-form">
+  <div style="height:16px"></div>
+  <div class="form-screen pb32">
+
+    <!-- PASO 1: DATOS -->
+    <div id="paso-1">
+      <div class="step-indicator">
+        <div class="step-dot active" id="dot-1"></div>
+        <div class="step-dot" id="dot-2"></div>
+      </div>
+
+      <div class="section-header">
+        <div class="section-header-icon icon-sky">📍</div>
+        <div>
+          <h3>Datos de la plaza</h3>
+          <p>Información básica y ubicación GPS</p>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Nombre de la plaza</label>
+        <input class="form-input" id="p-nombre" type="text" placeholder="Ej: Plaza Simón Bolívar">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Dirección / Sector</label>
+        <input class="form-input" id="p-sector" type="text" placeholder="Ej: Av. Lo Errázuriz con Calle 5">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Ubicación GPS</label>
+        <div class="gps-box" id="gps-box">
+          <div class="gps-pulse">📡</div>
+          <div class="gps-info">
+            <strong id="gps-status">Sin ubicación capturada</strong>
+            <small id="gps-coords">Toca el botón para capturar</small>
+          </div>
+        </div>
+        <button class="btn-main mt8" onclick="capturarGPS()" style="margin-bottom:0">
+          <div class="btn-main-icon">🎯</div>
+          <div class="btn-main-text">Capturar mi ubicación actual</div>
+        </button>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Fotos generales de la plaza</label>
+        <div class="photo-area" onclick="document.getElementById('f-fotos-plaza').click()">
+          <input type="file" id="f-fotos-plaza" accept="image/*" multiple capture="environment" onchange="addPhotos(this,'grid-plaza','plazaPhotos')">
+          <div class="photo-area-icon">📷</div>
+          <div class="photo-area-text">Toca para sacar fotos</div>
+          <div class="photo-area-sub">Vista general, entorno, accesos</div>
+        </div>
+        <div class="photo-grid" id="grid-plaza"></div>
+      </div>
+
+      <button class="btn-main btn-grass" onclick="irPaso2()">
+        <div class="btn-main-icon">🎠</div>
+        <div class="btn-main-text">
+          Continuar — Registrar juegos
+          <small>Paso 2 de 2</small>
+        </div>
+      </button>
+    </div>
+
+    <!-- PASO 2: JUEGOS -->
+    <div id="paso-2" style="display:none">
+      <div class="step-indicator">
+        <div class="step-dot done" id="dot-1b"></div>
+        <div class="step-dot active" id="dot-2b"></div>
+      </div>
+
+      <div class="section-header">
+        <div class="section-header-icon icon-grass">🎠</div>
+        <div>
+          <h3>Juegos de la plaza</h3>
+          <p>Registra cada juego por separado</p>
+        </div>
+      </div>
+
+      <div id="juegos-container"></div>
+
+      <button class="btn-outline" onclick="addJuego()" style="margin-bottom:16px">
+        <div class="btn-outline-icon">➕</div>
+        Agregar otro juego
+      </button>
+
+      <div class="divider"></div>
+
+      <button class="btn-main btn-grass" onclick="guardarPlaza()">
+        <div class="btn-main-icon">✅</div>
+        <div class="btn-main-text">
+          Guardar plaza completa
+          <small>Se guarda en tu dispositivo</small>
+        </div>
+      </button>
+      <button class="btn-outline" onclick="volverPaso1()" style="margin-top:8px">
+        <div class="btn-outline-icon">←</div>
+        Volver a datos de plaza
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════ LISTA ══════════════════════════════ -->
+<div class="screen" id="screen-lista">
+  <div style="height:16px"></div>
+  <div class="list-screen pb32">
+    <div class="filter-tabs" id="filter-tabs">
+      <div class="filter-tab active" onclick="setFilter('todas',this)">Todas</div>
+      <div class="filter-tab" onclick="setFilter('critico',this)">🔴 Críticas</div>
+      <div class="filter-tab" onclick="setFilter('regular',this)">⚠️ Regulares</div>
+      <div class="filter-tab" onclick="setFilter('bueno',this)">✅ En buen estado</div>
+    </div>
+    <div id="lista-container"></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════ DETALLE ══════════════════════════════ -->
+<div class="screen" id="screen-detalle">
+  <div style="height:16px"></div>
+  <div class="detail-screen pb32" id="detalle-contenido"></div>
+</div>
+
+<script>
+// ══════════════════════════════
+// STATE
+// ══════════════════════════════
+let plazas = JSON.parse(localStorage.getItem('plazas_v2') || '[]');
+let plazaPhotos = [];
+let juegoPhotos = {};
+let gpsData = null;
+let juegoCount = 0;
+let currentFilter = 'todas';
+let navStack = ['screen-home'];
+
+const TIPOS = ['Resbaladero','Columpio','Sube y baja','Trepador','Carrusel','Hamaca','Banca / Mesa','Otro'];
+const DANOS = [
+  {icon:'🔩', label:'Oxidado'},
+  {icon:'🪨', label:'Vandalizado'},
+  {icon:'💥', label:'Roto'},
+  {icon:'🎨', label:'Pintura dañada'},
+  {icon:'🔧', label:'Tornillos sueltos'},
+  {icon:'🏗️', label:'Base dañada'},
+  {icon:'❓', label:'Piezas faltantes'}
+];
+
+// ══════════════════════════════
+// NAVIGATION
+// ══════════════════════════════
+function goTo(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  navStack.push(id);
+  updateHeader(id);
+  if (id === 'screen-form')  initForm();
+  if (id === 'screen-lista') renderLista();
+  updateStats();
+  window.scrollTo(0,0);
+}
+
+function handleBack() {
+  navStack.pop();
+  const prev = navStack[navStack.length-1] || 'screen-home';
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(prev).classList.add('active');
+  updateHeader(prev);
+  if (prev === 'screen-lista') renderLista();
+  updateStats();
+  window.scrollTo(0,0);
+}
+
+function updateHeader(id) {
+  const backBtn = document.getElementById('back-btn');
+  const logo = document.getElementById('header-logo');
+  const title = document.getElementById('header-title');
+  const sub = document.getElementById('header-sub');
+
+  if (id === 'screen-home') {
+    backBtn.classList.remove('visible');
+    logo.textContent = '🛝';
+    title.textContent = 'PlazaCheck';
+    sub.textContent = 'Municipalidad de Cerro Navia';
+  } else if (id === 'screen-form') {
+    backBtn.classList.add('visible');
+    logo.textContent = '📋';
+    title.textContent = 'Nueva Plaza';
+    sub.textContent = 'Paso 1 de 2';
+  } else if (id === 'screen-lista') {
+    backBtn.classList.add('visible');
+    logo.textContent = '🗂️';
+    title.textContent = 'Plazas Registradas';
+    sub.textContent = `${plazas.length} en total`;
+  } else if (id === 'screen-detalle') {
+    backBtn.classList.add('visible');
+    logo.textContent = '🏞️';
+    title.textContent = 'Detalle Plaza';
+    sub.textContent = 'Inspección';
+  }
+}
+
+// ══════════════════════════════
+// STATS
+// ══════════════════════════════
+function updateStats() {
+  const total = plazas.length;
+  const juegos = plazas.reduce((a,p) => a + (p.juegos||[]).length, 0);
+  const criticos = plazas.reduce((a,p) => a + (p.juegos||[]).filter(j=>j.estado==='critico').length, 0);
+  document.getElementById('stat-total').textContent = total;
+  document.getElementById('stat-juegos').textContent = juegos;
+  document.getElementById('stat-criticos').textContent = criticos;
+  const pct = Math.min(Math.round(total/100*100),100);
+  document.getElementById('progress-fill').style.width = pct+'%';
+  document.getElementById('progress-pct').textContent = `${total} / 100 plazas`;
+}
+
+// ══════════════════════════════
+// FORM
+// ══════════════════════════════
+function initForm() {
+  plazaPhotos = [];
+  juegoPhotos = {};
+  gpsData = null;
+  juegoCount = 0;
+  document.getElementById('p-nombre').value = '';
+  document.getElementById('p-sector').value = '';
+  document.getElementById('grid-plaza').innerHTML = '';
+  document.getElementById('gps-box').className = 'gps-box';
+  document.getElementById('gps-status').textContent = 'Sin ubicación capturada';
+  document.getElementById('gps-coords').textContent = 'Toca el botón para capturar';
+  document.getElementById('juegos-container').innerHTML = '';
+  document.getElementById('paso-1').style.display = 'block';
+  document.getElementById('paso-2').style.display = 'none';
+  document.getElementById('header-sub').textContent = 'Paso 1 de 2';
+  addJuego();
+}
+
+function irPaso2() {
+  if (!document.getElementById('p-nombre').value.trim()) {
+    showToast('⚠️ Ingresa el nombre de la plaza'); return;
+  }
+  document.getElementById('paso-1').style.display = 'none';
+  document.getElementById('paso-2').style.display = 'block';
+  document.getElementById('header-sub').textContent = 'Paso 2 de 2';
+  window.scrollTo(0,0);
+}
+
+function volverPaso1() {
+  document.getElementById('paso-2').style.display = 'none';
+  document.getElementById('paso-1').style.display = 'block';
+  document.getElementById('header-sub').textContent = 'Paso 1 de 2';
+  window.scrollTo(0,0);
+}
+
+// GPS
+function capturarGPS() {
+  if (!navigator.geolocation) { showToast('GPS no disponible'); return; }
+  document.getElementById('gps-status').textContent = 'Capturando...';
+  navigator.geolocation.getCurrentPosition(
+    pos => {
+      gpsData = { lat: pos.coords.latitude, lng: pos.coords.longitude, acc: Math.round(pos.coords.accuracy) };
+      document.getElementById('gps-box').className = 'gps-box ok';
+      document.getElementById('gps-status').textContent = '✅ Ubicación capturada';
+      document.getElementById('gps-coords').textContent =
+        `${gpsData.lat.toFixed(6)}, ${gpsData.lng.toFixed(6)}  ±${gpsData.acc}m`;
+    },
+    () => showToast('No se pudo capturar. Activa el GPS.'),
+    { enableHighAccuracy: true, timeout: 12000 }
+  );
+}
+
+// Photos
+function addPhotos(input, gridId, arrayName) {
+  const files = Array.from(input.files);
+  const grid = document.getElementById(gridId);
+  files.forEach(file => {
+    const reader = new FileReader();
+    reader.onload = e => {
+      const data = e.target.result;
+      if (arrayName === 'plazaPhotos') plazaPhotos.push(data);
+      else {
+        const id = arrayName;
+        if (!juegoPhotos[id]) juegoPhotos[id] = [];
+        juegoPhotos[id].push(data);
+      }
+      const wrap = document.createElement('div');
+      wrap.className = 'photo-thumb-wrap';
+      const img = document.createElement('img');
+      img.src = data; img.className = 'photo-thumb';
+      const rm = document.createElement('button');
+      rm.className = 'photo-remove'; rm.innerHTML = '×';
+      rm.onclick = () => {
+        wrap.remove();
+        if (arrayName === 'plazaPhotos') plazaPhotos = plazaPhotos.filter(f=>f!==data);
+        else juegoPhotos[arrayName] = (juegoPhotos[arrayName]||[]).filter(f=>f!==data);
+      };
+      wrap.appendChild(img); wrap.appendChild(rm);
+      grid.appendChild(wrap);
+    };
+    reader.readAsDataURL(file);
+  });
+  input.value = '';
+}
+
+// Juegos
+function addJuego() {
+  juegoCount++;
+  const id = 'j'+juegoCount;
+  juegoPhotos[id] = [];
+  const container = document.getElementById('juegos-container');
+  const card = document.createElement('div');
+  card.className = 'juego-form-card';
+  card.id = 'card-'+id;
+  card.innerHTML = `
+    <div class="juego-form-header">
+      <div class="juego-form-badge">
+        <div class="juego-form-num">Juego #${juegoCount}</div>
+      </div>
+      <button class="btn-del" onclick="removeJuego('${id}')">🗑 Eliminar</button>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Tipo de juego</label>
+      <select class="form-select" id="${id}-tipo">
+        ${TIPOS.map(t=>`<option>${t}</option>`).join('')}
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Estado general</label>
+      <select class="form-select" id="${id}-estado">
+        <option value="bueno">✅ Bueno — Sin daños visibles</option>
+        <option value="regular">⚠️ Regular — Daños menores</option>
+        <option value="critico">🔴 Crítico — Requiere intervención urgente</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Tipos de daño detectados</label>
+      <div class="damage-grid" id="${id}-danos">
+        ${DANOS.map(d=>`
+          <label class="damage-chip" id="chip-${id}-${d.label.replace(/ /g,'-')}">
+            <input type="checkbox" value="${d.label}" onchange="toggleChip(this)">
+            <span class="damage-chip-icon">${d.icon}</span>
+            <span class="damage-chip-label">${d.label}</span>
+          </label>`).join('')}
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Observaciones</label>
+      <textarea class="form-input" id="${id}-obs" rows="2" placeholder="Descripción del daño, urgencia, etc."></textarea>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">📷 Fotos del juego</label>
+      <div class="photo-area" onclick="document.getElementById('fi-${id}').click()">
+        <input type="file" id="fi-${id}" accept="image/*" multiple capture="environment" onchange="addPhotos(this,'grid-${id}','${id}')">
+        <div class="photo-area-icon">📸</div>
+        <div class="photo-area-text">Fotografiar daños</div>
+        <div class="photo-area-sub">Óxido, roturas, vandalismo</div>
+      </div>
+      <div class="photo-grid" id="grid-${id}"></div>
+    </div>
+  `;
+  container.appendChild(card);
+  card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function removeJuego(id) {
+  document.getElementById('card-'+id)?.remove();
+  delete juegoPhotos[id];
+}
+
+function toggleChip(input) {
+  input.closest('.damage-chip').classList.toggle('selected', input.checked);
+}
+
+// Save
+function guardarPlaza() {
+  const nombre = document.getElementById('p-nombre').value.trim();
+  if (!nombre) { showToast('⚠️ Falta el nombre'); return; }
+
+  const juegos = [];
+  document.querySelectorAll('[id^="card-j"]').forEach(card => {
+    const id = card.id.replace('card-','');
+    juegos.push({
+      tipo:   document.getElementById(`${id}-tipo`)?.value  || '',
+      estado: document.getElementById(`${id}-estado`)?.value|| 'bueno',
+      obs:    document.getElementById(`${id}-obs`)?.value   || '',
+      danos:  Array.from(card.querySelectorAll('.damage-chip.selected input')).map(i=>i.value),
+      fotos:  juegoPhotos[id] || []
+    });
+  });
+
+  const plaza = {
+    id: Date.now(),
+    nombre,
+    sector: document.getElementById('p-sector').value,
+    gps: gpsData,
+    fotos: plazaPhotos,
+    juegos,
+    fecha: new Date().toLocaleDateString('es-CL'),
+    hora:  new Date().toLocaleTimeString('es-CL',{hour:'2-digit',minute:'2-digit'})
+  };
+
+  plazas.push(plaza);
+  localStorage.setItem('plazas_v2', JSON.stringify(plazas));
+  showToast(`✅ "${nombre}" guardada`);
+  setTimeout(() => {
+    navStack = ['screen-home'];
+    goTo('screen-home');
+  }, 1300);
+}
+
+// ══════════════════════════════
+// LISTA
+// ══════════════════════════════
+function setFilter(f, el) {
+  currentFilter = f;
+  document.querySelectorAll('.filter-tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  renderLista();
+}
+
+function estadoPlaza(p) {
+  const estados = (p.juegos||[]).map(j=>j.estado);
+  if (estados.includes('critico')) return {text:'Crítica',cls:'pill-red',dot:'🔴'};
+  if (estados.includes('regular')) return {text:'Regular',cls:'pill-warn',dot:'⚠️'};
+  return {text:'Buen estado',cls:'pill-green',dot:'✅'};
+}
+
+function renderLista() {
+  document.getElementById('header-sub').textContent = `${plazas.length} en total`;
+  const container = document.getElementById('lista-container');
+
+  let lista = plazas;
+  if (currentFilter !== 'todas') {
+    lista = plazas.filter(p => {
+      const estados = (p.juegos||[]).map(j=>j.estado);
+      if (currentFilter === 'critico') return estados.includes('critico');
+      if (currentFilter === 'regular') return estados.includes('regular') && !estados.includes('critico');
+      if (currentFilter === 'bueno')   return estados.length === 0 || estados.every(e=>e==='bueno');
+      return true;
+    });
+  }
+
+  if (!lista.length) {
+    container.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-state-icon">🌳</div>
+        <h3>Sin plazas aquí</h3>
+        <p>No hay plazas registradas en esta categoría.</p>
+      </div>`;
+    return;
+  }
+
+  container.innerHTML = lista.map(p => {
+    const eg = estadoPlaza(p);
+    const thumb = p.fotos?.[0] ? `<img src="${p.fotos[0]}">` : '🏞️';
+    return `
+    <div class="plaza-card" onclick="verDetalle(${p.id})">
+      <div class="plaza-card-thumb">${thumb}</div>
+      <div class="plaza-card-info">
+        <div class="plaza-card-name">${p.nombre}</div>
+        <div class="plaza-card-meta">${p.sector||'Sin dirección'} · ${p.fecha}</div>
+        <div class="plaza-card-badges">
+          <span class="status-pill ${eg.cls}">${eg.dot} ${eg.text}</span>
+          <span style="font-size:12px;color:var(--stone)">${(p.juegos||[]).length} juego${(p.juegos||[]).length!==1?'s':''}</span>
+        </div>
+      </div>
+      <div class="plaza-card-arrow">›</div>
+    </div>`;
+  }).join('');
+}
+
+// ══════════════════════════════
+// DETALLE
+// ══════════════════════════════
+function verDetalle(id) {
+  const p = plazas.find(x=>x.id===id);
+  if (!p) return;
+  const eg = estadoPlaza(p);
+  const mapsURL = p.gps ? `https://www.google.com/maps?q=${p.gps.lat},${p.gps.lng}` : null;
+
+  const juegosHTML = (p.juegos||[]).map((j,i) => {
+    const pillCls = j.estado==='critico'?'pill-red':j.estado==='regular'?'pill-warn':'pill-green';
+    const pillTxt = j.estado==='critico'?'🔴 Crítico':j.estado==='regular'?'⚠️ Regular':'✅ Bueno';
+    return `
+    <div class="juego-detail">
+      <div class="juego-detail-top">
+        <div class="juego-detail-name">${j.tipo} #${i+1}</div>
+        <span class="status-pill ${pillCls}">${pillTxt}</span>
+      </div>
+      ${j.danos?.length ? `
+        <div class="juego-damage-tags">
+          ${j.danos.map(d=>`<span class="damage-tag">${d}</span>`).join('')}
+        </div>` : ''}
+      ${j.obs ? `<div style="font-size:13px;color:var(--stone);margin-bottom:10px;line-height:1.5">${j.obs}</div>` : ''}
+      ${j.fotos?.length ? `
+        <div class="photo-grid">
+          ${j.fotos.map(f=>`<img src="${f}" class="photo-thumb">`).join('')}
+        </div>` : ''}
+    </div>`;
+  }).join('');
+
+  document.getElementById('detalle-contenido').innerHTML = `
+    <div class="detail-hero">
+      <h2>${p.nombre}</h2>
+      <p>${p.sector||'Sin dirección'} · ${p.fecha} ${p.hora}</p>
+      <div class="detail-hero-badges">
+        <span class="detail-badge">${eg.dot} ${eg.text}</span>
+        <span class="detail-badge">🎠 ${(p.juegos||[]).length} juegos</span>
+        ${p.gps ? `<span class="detail-badge">📍 GPS</span>` : ''}
+      </div>
+    </div>
+
+    ${mapsURL ? `
+    <a class="maps-btn" href="${mapsURL}" target="_blank">
+      <span style="font-size:22px">🗺️</span>
+      Ver ubicación en Google Maps
+    </a>` : ''}
+
+    ${p.gps ? `
+    <div class="info-card" style="margin-bottom:14px">
+      <div class="info-card-title">📡 Coordenadas GPS</div>
+      <div class="info-row">
+        <span class="info-row-label">Latitud</span>
+        <span class="info-row-val">${p.gps.lat.toFixed(6)}</span>
+      </div>
+      <div class="info-row">
+        <span class="info-row-label">Longitud</span>
+        <span class="info-row-val">${p.gps.lng.toFixed(6)}</span>
+      </div>
+      <div class="info-row">
+        <span class="info-row-label">Precisión</span>
+        <span class="info-row-val">±${p.gps.acc}m</span>
+      </div>
+    </div>` : ''}
+
+    ${p.fotos?.length ? `
+    <div class="info-card" style="margin-bottom:14px">
+      <div class="info-card-title">📷 Fotos generales</div>
+      <div class="photo-grid">
+        ${p.fotos.map(f=>`<img src="${f}" class="photo-thumb">`).join('')}
+      </div>
+    </div>` : ''}
+
+    <div class="info-card-title" style="margin-bottom:12px">🎠 Juegos registrados</div>
+    ${juegosHTML || '<div class="empty-state" style="padding:20px"><p>Sin juegos registrados</p></div>'}
+
+    <div class="divider"></div>
+    <button onclick="eliminarPlaza(${p.id})" style="width:100%;padding:16px;background:var(--red-soft);color:var(--red);border:2px solid var(--red);border-radius:14px;font-size:15px;font-weight:700;font-family:'Nunito',sans-serif;cursor:pointer">
+      🗑 Eliminar plaza
+    </button>
+  `;
+
+  navStack.push('screen-detalle');
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('screen-detalle').classList.add('active');
+  updateHeader('screen-detalle');
+  window.scrollTo(0,0);
+}
+
+function eliminarPlaza(id) {
+  if (!confirm('¿Eliminar esta plaza permanentemente?')) return;
+  plazas = plazas.filter(p=>p.id!==id);
+  localStorage.setItem('plazas_v2', JSON.stringify(plazas));
+  showToast('Plaza eliminada');
+  handleBack();
+}
+
+// ══════════════════════════════
+// EXPORT
+// ══════════════════════════════
+function exportarCSV() {
+  if (!plazas.length) { showToast('⚠️ No hay plazas registradas'); return; }
+  let csv = 'Plaza,Sector,Lat,Lng,Fecha,Hora,Juego N°,Tipo,Estado,Daños,Observaciones\n';
+  plazas.forEach(p => {
+    if (!p.juegos?.length) {
+      csv += `"${p.nombre}","${p.sector||''}","${p.gps?.lat||''}","${p.gps?.lng||''}","${p.fecha}","${p.hora}","—","—","—","—","—"\n`;
+    } else {
+      p.juegos.forEach((j,i) => {
+        csv += `"${p.nombre}","${p.sector||''}","${p.gps?.lat||''}","${p.gps?.lng||''}","${p.fecha}","${p.hora}","${i+1}","${j.tipo}","${j.estado}","${j.danos?.join('; ')||''}","${j.obs||''}"\n`;
+      });
+    }
+  });
+  const blob = new Blob(['\uFEFF'+csv], {type:'text/csv;charset=utf-8;'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `plazacheck-${new Date().toISOString().split('T')[0]}.csv`;
+  a.click();
+  showToast('✅ CSV exportado con éxito');
+}
+
+// ══════════════════════════════
+// TOAST
+// ══════════════════════════════
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2600);
+}
+
+// INIT
+updateStats();
+</script>
+</body>
+</html>
